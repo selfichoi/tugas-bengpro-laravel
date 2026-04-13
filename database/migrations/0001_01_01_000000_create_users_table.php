@@ -11,12 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel Users dengan kolom sesuai Modul 5
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nama'); // Sudah diganti dari 'name' jadi 'nama'
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            
+            // Kolom tambahan wajib Modul 5
+            $table->string('alamat')->nullable();
+            $table->string('no_ktp')->nullable();
+            $table->string('no_hp')->nullable();
+            $table->string('role'); // Admin, Dokter, atau Pasien
+
             $table->rememberToken();
             $table->timestamps();
         });
