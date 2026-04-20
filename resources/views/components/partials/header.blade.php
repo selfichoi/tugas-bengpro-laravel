@@ -14,15 +14,11 @@
                 </div>
             </label>
             <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 border border-base-200">
-                <li><a class="py-3"><i class="fas fa-user mr-2"></i> Profile</a></li>
-                <li>
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <a href="{{ url('/logout') }}" class="btn btn-error btn-sm text-white font-bold">
-    <i class="fas fa-power-off mr-2"></i> KELUAR
-</a>
-                    </form>
+                <li class="px-4 py-2 border-b border-base-100 mb-1">
+                    <span class="font-bold text-gray-700">Halo, {{ Auth::user()->nama }}</span>
                 </li>
+                <li><a class="py-3 hover:bg-blue-50"><i class="fas fa-user mr-2"></i> Profile</a></li>
+                {{-- Tombol KELUAR dihapus dari sini karena sudah ada di Sidebar --}}
             </ul>
         </div>
     </div>

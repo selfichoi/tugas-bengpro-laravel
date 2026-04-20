@@ -8,20 +8,17 @@ use Illuminate\Http\Request;
 
 class AdminPoliController extends Controller
 {
-    // Tampilkan semua data poli
     public function index()
     {
         $polis = Poli::all(); 
-        return view('admin.polis.index', compact('polis')); 
+        return view('admin.poli.index', compact('polis')); // Sudah diperbaiki dari 'poli' ke 'polis'
     }
 
-    // Tampilkan form tambah poli
     public function create()
     {
-        return view('admin.polis.create'); 
+        return view('admin.poli.create'); 
     }
 
-    // Simpan data poli baru ke database
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -33,14 +30,12 @@ class AdminPoliController extends Controller
         return redirect()->route('polis.index')->with('success', 'Poli berhasil ditambahkan');
     }
 
-    // Menampilkan halaman edit (Ini yang tadi bikin error)
     public function edit($id)
     {
         $poli = Poli::findOrFail($id);
-        return view('admin.polis.edit', compact('poli'));
+        return view('admin.poli.edit', compact('poli'));
     }
 
-    // Memproses update data
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
@@ -54,7 +49,6 @@ class AdminPoliController extends Controller
         return redirect()->route('polis.index')->with('success', 'Poli berhasil diupdate');
     }
 
-    // Menghapus data poli
     public function destroy($id)
     {
         $poli = Poli::findOrFail($id);
