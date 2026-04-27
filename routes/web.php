@@ -64,7 +64,7 @@ Route::middleware(['auth', 'role:dokter'])->prefix('dokter')->group(function () 
 Route::middleware(['auth', 'role:pasien'])->prefix('pasien')->group(function () {
 
     Route::get('/dashboard', function () {
-        return view('components.pasien.dashboard');
+        return view('pasien.dashboard');
     })->name('pasien.dashboard');
 
     Route::get('/daftar', [PasienPoliController::class, 'get'])
