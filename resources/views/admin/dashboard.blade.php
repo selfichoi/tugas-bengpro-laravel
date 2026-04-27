@@ -14,7 +14,6 @@
                 <div>
                     <h3 class="text-gray-500 text-sm font-medium">Total Obat</h3>
                     <p class="text-2xl font-bold text-gray-800">Cek Data</p>
-                    {{-- REVISI: Ganti 'obats.index' jadi 'obat.index' --}}
                     <a href="{{ route('obat.index') }}" class="text-blue-600 text-xs hover:underline">Lihat Detail →</a>
                 </div>
             </div>
@@ -39,7 +38,6 @@
                 <div>
                     <h3 class="text-gray-500 text-sm font-medium">Total Dokter</h3>
                     <p class="text-2xl font-bold text-gray-800">Cek Data</p>
-                    {{-- REVISI: Pastikan pakai 'dokter.index' sesuai rute tunggal kita --}}
                     <a href="{{ route('dokter.index') }}" class="text-purple-600 text-xs hover:underline">Lihat Detail →</a>
                 </div>
             </div>

@@ -4,8 +4,5 @@
             Copyright &copy; {{ now()->year }} - <span class="text-blue-600 font-bold">Poliklinik</span>. 
             All rights reserved.
         </p>
-        <div class="flex items-center gap-6">
-            <span class="text-base-content/40 italic">Bengpro Laravel - UDINUS</span>
-        </div>
     </div>
 </footer>

@@ -11,7 +11,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'nama',     // REVISI: Ganti 'name' jadi 'nama' agar sinkron dengan DB
+        'nama',
         'email', 
         'password', 
         'role', 
@@ -22,13 +22,22 @@ class User extends Authenticatable
         'no_rm'
     ];
 
-    // Relasi ke Poli (Setiap Dokter/User hanya milik satu Poli)
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * Relasi ke Poli sesuai Modul 7
+     */
     public function poli()
     {
         return $this->belongsTo(Poli::class, 'id_poli');
     }
 
-    // Relasi ke Jadwal Periksa (Satu Dokter punya banyak Jadwal)
+    /**
+     * Relasi ke Jadwal Periksa (Modul 12)
+     */
     public function jadwalPeriksas()
     {
         return $this->hasMany(JadwalPeriksa::class, 'id_dokter');

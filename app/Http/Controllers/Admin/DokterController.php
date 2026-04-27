@@ -26,23 +26,28 @@ class DokterController extends Controller
     {
         $request->validate([
             'nama'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:users',
-            'password' => 'required|min:6',
+            'alamat'   => 'required|string',
+            'no_ktp'   => 'required|string|max:16|unique:users,no_ktp',
+            'no_hp'    => 'required|string|max:15',
             'id_poli'  => 'required',
-            'no_hp'    => 'required',
+            'email'    => 'required|string|unique:users,email',
+            'password' => 'required|string|min:6',
         ]);
 
         User::create([
-            'nama'     => $request->nama, 
+            'nama'     => $request->nama,
+            'alamat'   => $request->alamat,
+            'no_ktp'   => $request->no_ktp,
+            'no_hp'    => $request->no_hp,
+            'id_poli'  => $request->id_poli,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
-            'role'     => 'dokter',
-            'id_poli'  => $request->id_poli,
-            'alamat'   => $request->alamat,
-            'no_hp'    => $request->no_hp,
+            'role'     => 'dokter', // Menandai role sesuai modul
         ]);
 
-        return redirect()->route('dokter.index')->with('success', 'Dokter berhasil ditambahkan!');
+        return redirect()->route('dokter.index')
+            ->with('message', 'Data Dokter Berhasil di tambahkan')
+            ->with('type', 'success');
     }
 
     public function edit(User $dokter)
@@ -53,40 +58,41 @@ class DokterController extends Controller
 
     public function update(Request $request, User $dokter)
     {
-        // Validasi menggunakan 'nama' sesuai database
         $request->validate([
             'nama'    => 'required|string|max:255',
-            'email'   => 'required|email|unique:users,email,' . $dokter->id,
+            'alamat'  => 'required|string',
+            'no_ktp'  => 'required|string|max:16|unique:users,no_ktp,' . $dokter->id,
+            'no_hp'   => 'required|string|max:15',
             'id_poli' => 'required',
-            'no_hp'   => 'required',
+            'email'   => 'required|string|unique:users,email,' . $dokter->id,
+            'password' => 'nullable|string|min:6',
         ]);
 
-        $data = [
+        $updateData = [
             'nama'    => $request->nama,
-            'email'   => $request->email,
-            'id_poli' => $request->id_poli,
             'alamat'  => $request->alamat,
+            'no_ktp'  => $request->no_ktp,
             'no_hp'   => $request->no_hp,
+            'id_poli' => $request->id_poli,
+            'email'   => $request->email,
         ];
 
         if ($request->filled('password')) {
-            // Cek password lama
-            if (Hash::check($request->password, $dokter->password)) {
-                return redirect()->back()
-                    ->withErrors(['password' => 'Password baru tidak boleh sama dengan password lama!'])
-                    ->withInput();
-            }
-            $data['password'] = Hash::make($request->password);
+            $updateData['password'] = Hash::make($request->password);
         }
 
-        $dokter->update($data);
+        $dokter->update($updateData);
 
-        return redirect()->route('dokter.index')->with('success', 'Data Dokter berhasil diupdate!');
+        return redirect()->route('dokter.index')
+            ->with('message', 'Data Dokter Berhasil di ubah')
+            ->with('type', 'success');
     }
 
     public function destroy(User $dokter)
     {
         $dokter->delete();
-        return redirect()->route('dokter.index')->with('success', 'Dokter berhasil dihapus!');
+        return redirect()->route('dokter.index')
+            ->with('message', 'Data Dokter Berhasil dihapus')
+            ->with('type', 'success');
     }
 }
