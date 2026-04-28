@@ -26,7 +26,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     
     Route::get('/dashboard', function () {
-        return view('components.admin.dashboard');
+        return view('admin.dashboard');
     })->name('admin.dashboard');
 
     Route::resource('polis', AdminPoliController::class);

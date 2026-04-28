@@ -18,7 +18,7 @@
 
             <form action="{{ route('periksa-pasien.store') }}" method="POST">
                 @csrf
-                <input type="hidden" name="id_daftar_poli" value="{{ $id }}">
+                <input type="hidden" name="id_daftar_poli" value="{{ $daftarPoli->id }}">
 
                 {{-- Pilih Obat --}}
                 <div class="form-control mb-5">
