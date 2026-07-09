@@ -49,7 +49,8 @@ class JadwalPeriksaController extends Controller
     public function edit($id)
     {
         $jadwalPeriksa = JadwalPeriksa::findOrFail($id);
-        return view('dokter.jadwal-periksa.edit', compact('jadwalPeriksa'));
+        // Sudah diperbaiki jalurnya agar sesuai struktur folder components
+        return view('components.dokter.jadwal-periksa.edit', compact('jadwalPeriksa'));
     }
 
     public function update(Request $request, $id)

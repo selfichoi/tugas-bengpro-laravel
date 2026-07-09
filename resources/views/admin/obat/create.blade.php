@@ -22,13 +22,23 @@
                             <input type="text" name="kemasan" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="Contoh: 10 tablet / botol" required>
                         </div>
 
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Harga</label>
-                            <div class="relative mt-1">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <span class="text-gray-500">Rp</span>
+                        <!-- Grid untuk menyelaraskan Harga dan Stok -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Harga</label>
+                                <div class="relative mt-1">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="text-gray-500">Rp</span>
+                                    </div>
+                                    <input type="number" name="harga" class="w-full pl-10 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="0" required min="0">
                                 </div>
-                                <input type="number" name="harga" class="w-full pl-10 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="0" required>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Stok Awal</label>
+                                <div class="relative mt-1">
+                                    <input type="number" name="stok" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="0" required min="0">
+                                </div>
                             </div>
                         </div>
                     </div>

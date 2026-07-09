@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Dokter;
 use App\Http\Controllers\Controller;
 use App\Models\DaftarPoli;
 use App\Models\Obat;
+use App\Models\Periksa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PeriksaPasienController extends Controller
 {
@@ -18,14 +20,12 @@ class PeriksaPasienController extends Controller
         $id_dokter = Auth::user()->id;
 
         // Ambil data pasien sesuai jadwal dokter yang login
-        // Variabel disamakan $daftarPasien supaya file index.blade kamu nggak error
-        $daftarPasien = DaftarPoli::whereHas('jadwal', function($query) use ($id_dokter) {
+        $daftarPasien = DaftarPoli::whereHas('jadwal', function ($query) use ($id_dokter) {
             $query->where('id_dokter', $id_dokter);
         })
-        ->with(['pasien', 'periksas']) 
+        ->with(['pasien', 'periksas'])
         ->get();
 
-        // FIX: Alamat harus pakai components. karena sudah kamu pindah
         return view('components.dokter.periksa-pasien.index', compact('daftarPasien'));
     }
 
@@ -34,27 +34,61 @@ class PeriksaPasienController extends Controller
      */
     public function create($id)
     {
-        // Mencari data pendaftaran pasien
+        // Ambil data pendaftaran pasien
         $daftarPoli = DaftarPoli::with('pasien')->findOrFail($id);
-        
-        // Mengambil data obat (Modul 9)
+
+        // Ambil data obat
         $obats = Obat::all();
 
-        // FIX: Alamat view form periksa di dalam folder components
         return view('components.dokter.periksa-pasien.create', compact('daftarPoli', 'obats'));
     }
 
     /**
-     * TAMPILAN DASHBOARD (Solusi Error image_a056c3.jpg)
-     * Tambahkan fungsi ini jika rute dashboard kamu mengarah ke sini
+     * Dashboard Dokter
      */
     public function dashboard()
     {
         return view('components.dokter.dashboard');
     }
 
+    /**
+     * Simpan hasil pemeriksaan pasien
+     */
     public function store(Request $request)
     {
-        // Logika simpan hasil periksa tetap di sini sesuai modul
+        $request->validate([
+            'id_daftar_poli' => 'required',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+
+            // Simpan data pemeriksaan
+            Periksa::create([
+                'id_daftar_poli' => $request->id_daftar_poli,
+                'tgl_periksa' => now(),
+                'catatan' => $request->catatan,
+                'biaya_periksa' => str_replace(['Rp', '.', ' '], '', $request->total_harga ?? 0),
+            ]);
+
+            // Update status pasien menjadi sudah diperiksa
+            DaftarPoli::where('id', $request->id_daftar_poli)
+                ->update([
+                    'status_periksa' => 1
+                ]);
+
+            DB::commit();
+
+            return redirect()
+                ->route('periksa-pasien.index')
+                ->with('message', 'Pemeriksaan berhasil disimpan');
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with('error', $e->getMessage());
+        }
     }
 }

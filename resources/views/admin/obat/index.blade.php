@@ -23,6 +23,7 @@
                                 <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Nama Obat</th>
                                 <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Kemasan</th>
                                 <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Harga</th>
+                                <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Stok</th>
                                 <th class="px-4 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Aksi</th>
                             </tr>
                         </thead>
@@ -32,6 +33,23 @@
                                 <td class="px-4 py-4 text-sm text-gray-700 font-medium">{{ $obat->nama_obat }}</td>
                                 <td class="px-4 py-4 text-sm text-gray-600">{{ $obat->kemasan }}</td>
                                 <td class="px-4 py-4 text-sm text-gray-600">Rp {{ number_format($obat->harga, 0, ',', '.') }}</td>
+                                
+                                <td class="px-4 py-4 text-sm text-gray-600">
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-medium text-gray-800">{{ $obat->stok }}</span>
+                                        
+                                        @if($obat->stok == 0)
+                                            <span class="bg-red-100 text-red-700 border border-red-200 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide">
+                                                Stok Habis
+                                            </span>
+                                        @elseif($obat->stok <= 5)
+                                            <span class="bg-amber-100 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide">
+                                                Stok Menipis
+                                            </span>
+                                        @endif
+                                    </div>
+                                </td>
+
                                 <td class="px-4 py-4 text-center">
                                     <div class="flex justify-center gap-2">
                                         {{-- Sesuai Modul 9: Route pakai obat.edit --}}

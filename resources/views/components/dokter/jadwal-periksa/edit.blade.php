@@ -10,6 +10,7 @@
         <div class="card-body p-8">
             <form action="{{ route('jadwal-periksa.update', $jadwalPeriksa->id) }}" method="POST">
                 @csrf @method('PUT')
+                
                 <div class="form-control mb-5">
                     <label class="label"><span class="text-sm font-semibold text-gray-700">Hari <span class="text-red-500">*</span></span></label>
                     <select name="hari" class="select select-bordered border-2 w-full rounded-lg" required>
@@ -31,14 +32,14 @@
                 </div>
 
                 <div class="form-control mb-8">
-                    <label class="label"><span class="text-sm font-semibold text-gray-700">Status</span></label>
+                    <label class="label"><span class="text-sm font-semibold text-gray-700">Status <span class="text-red-500">*</span></span></label>
                     <div class="flex gap-4">
                         <label class="label cursor-pointer gap-2">
-                            <input type="radio" name="status" value="1" class="radio radio-primary radio-sm" {{ $jadwalPeriksa->status == 1 ? 'checked' : '' }} />
+                            <input type="radio" name="status" value="1" class="radio radio-primary radio-sm" {{ old('status', $jadwalPeriksa->status) == '1' ? 'checked' : '' }} required />
                             <span class="label-text">Aktif</span>
                         </label>
                         <label class="label cursor-pointer gap-2">
-                            <input type="radio" name="status" value="0" class="radio radio-primary radio-sm" {{ $jadwalPeriksa->status == 0 ? 'checked' : '' }} />
+                            <input type="radio" name="status" value="0" class="radio radio-primary radio-sm" {{ old('status', $jadwalPeriksa->status) == '0' ? 'checked' : '' }} required />
                             <span class="label-text">Tidak Aktif</span>
                         </label>
                     </div>
